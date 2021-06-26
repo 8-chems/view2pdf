@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="view2pdf_custom_external_layout_standard" inherit_id="web.external_layout_standard"
+                  primary="True">
+            <xpath expr="//t[@t-name='web.external_layout_standard']" position="replace">
+                <t t-name="l10n_dz_mis_reports.report_mis_custom_external_layout_standard">
+                    <div t-attf-class="header " t-att-style="report_header_style">
+                        <br/>
+
+
+                        <div class="row col-12">
+
+                            Some Header should be desgined here
+                        </div>
+
+
+                        <div class="" style="text-align:center;padding-left:5px;
+         font-size:16px!important; border:2px solid;background:white;margin-top:10px;">
+                            <b><t t-esc="o.name"/></b>
+                        </div>
+
+
+                        <div class="" style="text-align:center;padding-left:5px;
+         font-size:16px!important; border:2px solid;background:white;margin-top:10px;">
+                            <t t-esc="period_filter"/>
+                        </div>
+
+                        <br/>
+                    </div>
+
+
+                    <div style="padding-top:20px!important;"
+                         t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout"
+                         t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+                         t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <t t-call="web.address_layout"/>
+                        <t t-raw="0"/>
+                    </div>
+
+                    <!--if date_time is setting to true, we add a footer with date and time -->
+                    <t t-if="date_time">
+                        <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+                            <div class="text-right" style="border-top: 1px solid black;">
+                                <div t-if="report_type == 'pdf'" class="text-dark">
+                                    Page: <span class="page"/> / <span class="topage"/> |
+                                    Date: <span
+                                        t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </xpath>
+
+        </template>
+    </data>
+</odoo>

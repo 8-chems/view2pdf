@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="qweb_pdf_export" model="ir.actions.report">
+            <field name="name">Current Tree View Print </field>
+            <field name="model">report.tree.view.pdf.printer</field>
+            <field name="type">ir.actions.report</field>
+            <field name="report_name">view2pdf.view_template_printer</field>
+            <field name="report_type">qweb-pdf</field>
+        </record>
+
+        <template id="view_template_printer">
+
+
+            <t t-call="web.html_container">
+
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="destination" t-value="'IMPRIME DESTINE A L\'ADMINISTRATION'"/>
+                    <t t-set="period_filter" t-value="o.period_filter"/>
+                    <t t-call="view2pdf.view_report_custom_external_layout">
+
+                        <div class="page">
+                            <div class="query_view_table">
+                                <div class="query_view_thead">
+                                    <div class="query_view_row">
+                                        <t t-set="headers" t-value="o.parseText(o.headers)"/>
+                                        <t t-foreach="headers" t-as="field">
+                                            <t t-if="o.isDigit(field)">
+                                                <div class="query_view_cell query_view_collabel"
+                                                     style="text-align:right;padding-right:10px;">
+                                                    <t t-esc="field"/>
+                                                </div>
+                                            </t>
+                                            <t t-else="">
+                                                <div class="query_view_cell query_view_collabel">
+                                                    <t t-esc="field"/>
+                                                </div>
+                                            </t>
+
+                                        </t>
+                                    </div>
+                                </div>
+
+
+                                <div class="query_view_tbody">
+
+                                    <t t-foreach="o.String2Dict(o.rows)" t-as="row">
+
+                                        <div class="query_view_row">
+                                            <t t-foreach="row" t-as="val">
+                                                <div class="query_view_cell query_view_rowlabel">
+                                                    <t t-esc="val"/>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+
+        </template>
+    </data>
+</odoo>
